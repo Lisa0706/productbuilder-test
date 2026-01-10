@@ -1,14 +1,403 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hello World</title>
-  <link href='/style.css' rel='stylesheet'>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>로또 번호 추천</title>
+
+  <style>
+    /* =========================
+       THEME TOKENS
+       ========================= */
+    :root {
+      --bg1: #fdf2f8;
+      --bg2: #eef2ff;
+
+      --card-bg: rgba(255, 255, 255, 0.82);
+      --card-border: rgba(99, 102, 241, 0.18);
+
+      --title: #4f46e5;
+      --text: #374151;
+      --muted: #6b7280;
+
+      --btn-text: #1f2937;
+      --btn-grad-1: #a5b4fc;
+      --btn-grad-2: #f9a8d4;
+      --btn-shadow: rgba(79, 70, 229, 0.22);
+
+      --set-bg: #f8fafc;
+      --label: #6366f1;
+
+      --ball-bg: #e0e7ff;
+      --ball-text: #374151;
+
+      --bonus-bg: #fde68a;
+      --bonus-text: #92400e;
+      --bonus-border: #f59e0b;
+
+      --plus: #f59e0b;
+
+      --radius-card: 22px;
+      --radius-set: 18px;
+
+      /* Responsive spacing */
+      --pad: clamp(14px, 3.5vw, 24px);
+      --gap: clamp(10px, 2.8vw, 16px);
+    }
+
+    [data-theme="dark"] {
+      --bg1: #0b1220;
+      --bg2: #111827;
+
+      --card-bg: rgba(17, 24, 39, 0.74);
+      --card-border: rgba(165, 180, 252, 0.18);
+
+      --title: #c7d2fe;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+
+      --btn-text: #0b1220;
+      --btn-grad-1: #c7d2fe;
+      --btn-grad-2: #fbcfe8;
+      --btn-shadow: rgba(199, 210, 254, 0.16);
+
+      --set-bg: rgba(255, 255, 255, 0.06);
+      --label: #a5b4fc;
+
+      --ball-bg: rgba(199, 210, 254, 0.22);
+      --ball-text: #e5e7eb;
+
+      --bonus-bg: rgba(253, 230, 138, 0.18);
+      --bonus-text: #fde68a;
+      --bonus-border: rgba(245, 158, 11, 0.55);
+
+      --plus: #fbbf24;
+    }
+
+    /* =========================
+       BASE
+       ========================= */
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: "Pretendard", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      margin: 0;
+      padding: var(--pad);
+      background: linear-gradient(135deg, var(--bg1), var(--bg2));
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .wrap {
+      max-width: 840px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-card);
+      padding: var(--pad);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.10);
+    }
+
+    /* =========================
+       HEADER (responsive)
+       ========================= */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(20px, 4.8vw, 26px);
+      color: var(--title);
+      letter-spacing: -0.2px;
+      line-height: 1.15;
+    }
+
+    .sub {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: clamp(13px, 3.4vw, 15px);
+      line-height: 1.55;
+    }
+
+    .themeBtn {
+      border: 1px solid var(--card-border);
+      background: rgba(255, 255, 255, 0.35);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.15s ease, background 0.15s ease;
+      user-select: none;
+      white-space: nowrap;
+    }
+    [data-theme="dark"] .themeBtn { background: rgba(255, 255, 255, 0.06); }
+    .themeBtn:hover { transform: translateY(-1px); }
+
+    /* =========================
+       ACTIONS
+       ========================= */
+    .actions {
+      margin-top: 16px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .mainBtn {
+      width: min(420px, 100%);
+      cursor: pointer;
+      border: none;
+      border-radius: 999px;
+      padding: 14px 18px;
+      font-size: clamp(14px, 3.6vw, 16px);
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--btn-grad-1), var(--btn-grad-2));
+      color: var(--btn-text);
+      box-shadow: 0 10px 18px var(--btn-shadow);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .mainBtn:hover { transform: translateY(-2px); box-shadow: 0 14px 24px var(--btn-shadow); }
+
+    /* =========================
+       RESULTS (responsive)
+       ========================= */
+    .sets {
+      margin-top: 18px;
+      display: grid;
+      gap: var(--gap);
+    }
+
+    .set {
+      background: var(--set-bg);
+      border-radius: var(--radius-set);
+      padding: clamp(12px, 3vw, 16px);
+      display: grid;
+      grid-template-columns: 74px 1fr;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .label {
+      font-weight: 900;
+      color: var(--label);
+      font-size: 14px;
+      line-height: 42px; /* align with ball height */
+      white-space: nowrap;
+    }
+
+    .nums {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .ball {
+      width: clamp(36px, 10vw, 44px);
+      height: clamp(36px, 10vw, 44px);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      font-size: clamp(13px, 3.6vw, 16px);
+      color: var(--ball-text);
+      background: var(--ball-bg);
+      box-shadow: inset 0 -3px 0 rgba(0,0,0,0.06);
+      flex: 0 0 auto;
+    }
+
+    .plus {
+      font-weight: 900;
+      color: var(--plus);
+      margin: 0 2px;
+      font-size: 16px;
+    }
+
+    .bonus {
+      background: var(--bonus-bg);
+      color: var(--bonus-text);
+      border: 2px dashed var(--bonus-border);
+      box-shadow: none;
+    }
+
+    .footer {
+      margin-top: 16px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* =========================
+       MOBILE OPTIMIZATIONS
+       ========================= */
+    @media (max-width: 480px) {
+      .topbar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .themeBtn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .set {
+        grid-template-columns: 1fr; /* label on top */
+        align-items: center;
+      }
+
+      .label {
+        line-height: 1.2;
+        margin-bottom: 6px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-  <h1>Hello, world!</h1>
-  <button onclick="console.log('hello');">Press me</button>
-  <script defer type="text/javascript" src="/main.js"></script>
+  <div class="wrap">
+    <div class="card">
+      <div class="topbar">
+        <h1>🎲 로또 번호 추천</h1>
+        <button id="themeToggle" class="themeBtn" type="button" aria-label="테마 전환">
+          <span id="themeIcon">🌙</span>
+          <span id="themeText">다크모드</span>
+        </button>
+      </div>
+
+      <p class="sub">버튼을 누르면 <b>로또 번호 5세트</b>와 <b>보너스 번호</b>가 함께 나와요.</p>
+
+      <div class="actions">
+        <button id="btn" class="mainBtn" type="button">🎲 로또 번호 추천받기</button>
+      </div>
+
+      <div id="results" class="sets" aria-live="polite"></div>
+
+      <div class="footer">
+        ※ 1~45 중 중복 없는 6개 번호 + 보너스 1개 (세트별)<br />
+        재미로만 즐겨주세요 🙂
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // -------------------------
+    // LOTTO LOGIC
+    // -------------------------
+    function pickMainNumbers() {
+      const set = new Set();
+      while (set.size < 6) {
+        set.add(Math.floor(Math.random() * 45) + 1);
+      }
+      return Array.from(set).sort((a, b) => a - b);
+    }
+
+    function pickBonus(main) {
+      let bonus;
+      do {
+        bonus = Math.floor(Math.random() * 45) + 1;
+      } while (main.includes(bonus));
+      return bonus;
+    }
+
+    function recommendFiveSets() {
+      const container = document.getElementById("results");
+      container.innerHTML = "";
+
+      for (let i = 1; i <= 5; i++) {
+        const main = pickMainNumbers();
+        const bonus = pickBonus(main);
+
+        const setDiv = document.createElement("div");
+        setDiv.className = "set";
+
+        const label = document.createElement("div");
+        label.className = "label";
+        label.textContent = i + "세트";
+
+        const numsDiv = document.createElement("div");
+        numsDiv.className = "nums";
+
+        main.forEach(n => {
+          const ball = document.createElement("div");
+          ball.className = "ball";
+          ball.textContent = n;
+          numsDiv.appendChild(ball);
+        });
+
+        const plus = document.createElement("div");
+        plus.className = "plus";
+        plus.textContent = "+";
+
+        const bonusBall = document.createElement("div");
+        bonusBall.className = "ball bonus";
+        bonusBall.textContent = bonus;
+
+        numsDiv.appendChild(plus);
+        numsDiv.appendChild(bonusBall);
+
+        setDiv.appendChild(label);
+        setDiv.appendChild(numsDiv);
+        container.appendChild(setDiv);
+      }
+    }
+
+    // -------------------------
+    // THEME TOGGLE (light/dark)
+    // -------------------------
+    const THEME_KEY = "lotto_theme";
+
+    function applyTheme(theme) {
+      // theme: "light" | "dark"
+      if (theme === "dark") {
+        document.documentElement.setAttribute("data-theme", "dark");
+        document.getElementById("themeIcon").textContent = "☀️";
+        document.getElementById("themeText").textContent = "화이트모드";
+      } else {
+        document.documentElement.removeAttribute("data-theme");
+        document.getElementById("themeIcon").textContent = "🌙";
+        document.getElementById("themeText").textContent = "다크모드";
+      }
+      localStorage.setItem(THEME_KEY, theme);
+    }
+
+    function initTheme() {
+      const saved = localStorage.getItem(THEME_KEY);
+      if (saved === "dark" || saved === "light") {
+        applyTheme(saved);
+        return;
+      }
+      const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+      applyTheme(prefersDark ? "dark" : "light");
+    }
+
+    document.getElementById("themeToggle").addEventListener("click", () => {
+      const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+      applyTheme(isDark ? "light" : "dark");
+    });
+
+    // -------------------------
+    // INIT
+    // -------------------------
+    document.getElementById("btn").addEventListener("click", recommendFiveSets);
+
+    initTheme();
+    recommendFiveSets();
+  </script>
 </body>
 </html>
