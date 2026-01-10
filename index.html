@@ -3,100 +3,181 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AI 가위바위보 게임</title>
+  <meta name="description" content="인공지능(AI)과 함께하는 가위바위보 게임! 구글 Teachable Machine을 이용한 실시간 모션 인식 기술을 체험해보세요. 웹캠만 있으면 누구나 무료로 즐길 수 있습니다." />
+  <meta name="keywords" content="가위바위보, AI 게임, 인공지능, 머신러닝, Teachable Machine, 웹캠 게임" />
+  <meta property="og:title" content="AI 가위바위보 챌린지" />
+  <meta property="og:description" content="내 손동작을 인식하는 AI와 승부를 겨뤄보세요!" />
+  <title>AI 가위바위보 챌린지 - 인공지능 모션 인식 게임</title>
   <link rel="stylesheet" href="style.css" />
+  <!-- AdSense Script (Placeholder: 나중에 실제 코드로 교체하세요) -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
 </head>
 <body>
-  <div class="container">
-    <div class="card">
-      <div class="header">
-        <h1>✌️✊✋ AI 가위바위보</h1>
-        <p>카메라를 켜고 가위, 바위, 보 중 하나를 보여주세요.<br>AI 모델이 당신의 손을 인식하여 승부를 겨룹니다!</p>
-      </div>
 
-      <div class="webcam-wrapper">
-        <div id="webcam-container">
-          <div class="placeholder-text" id="placeholder">카메라 로딩 대기중...</div>
-        </div>
-      </div>
+  <!-- NAVIGATION -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="/" class="logo">✌️ AI 가위바위보</a>
+      <ul class="nav-links">
+        <li><a href="#game">게임하기</a></li>
+        <li><a href="#about">기술 원리</a></li>
+        <li><a href="#contact">문의하기</a></li>
+      </ul>
+    </div>
+  </nav>
 
-      <div class="status-area">
-        <div id="countdown" class="countdown"></div>
-        <div id="result" class="result-message"></div>
-        <div id="match-detail" class="match-info"></div>
+  <div class="main-layout">
+    
+    <!-- AD SLOT: TOP BANNER -->
+    <div class="ad-container">
+      <div class="ad-placeholder">
+        <span>광고 영역 (상단 배너)</span>
       </div>
-
-      <div class="btn-group">
-        <button id="start-cam-btn" class="btn" onclick="init()">📸 카메라 켜기</button>
-        <button id="play-btn" class="btn" onclick="playGame()" disabled>🎮 가위바위보!</button>
-      </div>
-
-      <div class="score-board">
-        <div class="score-item">
-          <div class="score-label">Player</div>
-          <div id="score-player" class="score-val">0</div>
-        </div>
-        <div class="score-item">
-          <div class="score-label">Draw</div>
-          <div id="score-draw" class="score-val">0</div>
-        </div>
-        <div class="score-item">
-          <div class="score-label">Computer</div>
-          <div id="score-com" class="score-val">0</div>
-        </div>
-      </div>
-      
     </div>
 
-    <div class="card contact-card">
-      <div class="header">
-        <h2>📩 비즈니스 문의</h2>
-        <p>광고 제휴 및 피드백은 아래 폼을 통해 남겨주세요.</p>
+    <!-- GAME SECTION -->
+    <div id="game" class="container">
+      <div class="card game-card">
+        <div class="header">
+          <h1>🤖 AI 가위바위보 챌린지</h1>
+          <p>여러분의 손동작을 실시간으로 인식하는 인공지능과 대결해보세요.<br><strong>카메라 켜기</strong>를 누르고 가위, 바위, 보를 보여주세요!</p>
+        </div>
+
+        <div class="webcam-wrapper">
+          <div id="webcam-container">
+            <div class="placeholder-text" id="placeholder">
+              <span class="icon">📷</span><br>
+              카메라 권한을 허용해주세요.<br>
+              모든 데이터는 서버로 전송되지 않고<br>브라우저에서만 처리됩니다.
+            </div>
+          </div>
+        </div>
+
+        <div class="status-area">
+          <div id="countdown" class="countdown"></div>
+          <div id="result" class="result-message">Ready?</div>
+          <div id="match-detail" class="match-info">AI를 이겨보세요!</div>
+        </div>
+
+        <div class="btn-group">
+          <button id="start-cam-btn" class="btn" onclick="init()">📸 카메라 켜기</button>
+          <button id="play-btn" class="btn" onclick="playGame()" disabled>🎮 가위바위보!</button>
+        </div>
+
+        <div class="score-board">
+          <div class="score-item">
+            <div class="score-label">승리</div>
+            <div id="score-player" class="score-val text-win">0</div>
+          </div>
+          <div class="score-item">
+            <div class="score-label">무승부</div>
+            <div id="score-draw" class="score-val text-draw">0</div>
+          </div>
+          <div class="score-item">
+            <div class="score-label">패배</div>
+            <div id="score-com" class="score-val text-lose">0</div>
+          </div>
+        </div>
       </div>
-      <form action="https://formspree.io/f/mjggbojl" method="POST" class="contact-form">
-        <div class="form-group">
-          <label for="name">성함</label>
-          <input type="text" id="name" name="name" placeholder="홍길동" required>
-        </div>
-        <div class="form-group">
-          <label for="email">이메일 주소</label>
-          <input type="email" id="email" name="_replyto" placeholder="example@domain.com" required>
-        </div>
-        <div class="form-group">
-          <label for="message">문의 내용</label>
-          <textarea id="message" name="message" rows="4" placeholder="문의 내용을 입력해주세요." required></textarea>
-        </div>
-        <button type="submit" class="btn">보내기</button>
-      </form>
     </div>
 
-    <div class="card contact-card">
-      <div class="header">
-        <h2>💬 댓글</h2>
+    <!-- CONTENT SECTION (For AdSense Content Quality) -->
+    <div id="about" class="container content-section">
+      <!-- AD SLOT: IN-ARTICLE -->
+      <div class="ad-container">
+        <div class="ad-placeholder">
+          <span>광고 영역 (콘텐츠 중간)</span>
+        </div>
       </div>
-      <div id="disqus_thread"></div>
-      <script>
-          /**
-          *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-          *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
-          /*
-          var disqus_config = function () {
-          this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-          this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-          };
-          */
-          (function() { // DON'T EDIT BELOW THIS LINE
-          var d = document, s = d.createElement('script');
-          s.src = 'https://sunnyssam.disqus.com/embed.js';
-          s.setAttribute('data-timestamp', +new Date());
-          (d.head || d.body).appendChild(s);
-          })();
-      </script>
-      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    </div>
-  </div>
 
-  <script id="dsq-count-scr" src="//sunnyssam.disqus.com/count.js" async></script>
+      <div class="card info-card">
+        <h2>💡 이 게임은 어떻게 작동하나요?</h2>
+        <article>
+          <h3>1. Teachable Machine 기술</h3>
+          <p>
+            이 서비스는 구글의 <strong>Teachable Machine</strong> 기술을 활용하여 제작되었습니다. 
+            수천 장의 가위, 바위, 보 손 모양 이미지를 미리 학습시킨 인공지능 모델이 탑재되어 있습니다. 
+            사용자가 웹캠을 통해 손을 보여주면, 브라우저 내에서 실시간으로 이미지를 분석하여 
+            가장 확률이 높은 손동작을 예측합니다.
+          </p>
+          
+          <h3>2. 프라이버시 보호 (Privacy First)</h3>
+          <p>
+            많은 분들이 웹캠 사용에 대해 걱정하실 수 있습니다. 하지만 안심하세요! 
+            이 게임에 사용되는 <strong>TensorFlow.js</strong> 라이브러리는 모든 연산을 여러분의 기기(브라우저) 내에서 처리합니다. 
+            즉, 여러분의 얼굴이나 방의 모습이 담긴 영상 데이터는 <strong>절대 서버로 전송되거나 저장되지 않습니다.</strong>
+          </p>
+
+          <h3>3. 게임 규칙</h3>
+          <ul>
+            <li>'카메라 켜기' 버튼을 눌러 웹캠 권한을 허용합니다.</li>
+            <li>카메라 화면 안에 손이 잘 보이도록 위치시킵니다.</li>
+            <li>'가위바위보!' 버튼을 누르면 3초 카운트다운이 시작됩니다.</li>
+            <li>타이밍에 맞춰 원하는 손동작을 취하세요.</li>
+            <li>AI는 무작위로 동작을 선택하며, 여러분의 동작 인식 결과와 비교하여 승패를 가립니다.</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+
+    <!-- CONTACT FORM -->
+    <div id="contact" class="container">
+      <div class="card contact-card">
+        <div class="header">
+          <h2>📩 비즈니스 및 제휴 문의</h2>
+          <p>서비스 개선 제안이나 광고 제휴 문의는 언제든 환영합니다.</p>
+        </div>
+        <form action="https://formspree.io/f/mjggbojl" method="POST" class="contact-form">
+          <div class="form-group">
+            <label for="name">성함 (Name)</label>
+            <input type="text" id="name" name="name" placeholder="홍길동" required>
+          </div>
+          <div class="form-group">
+            <label for="email">이메일 (Email)</label>
+            <input type="email" id="email" name="_replyto" placeholder="example@domain.com" required>
+          </div>
+          <div class="form-group">
+            <label for="message">문의 내용 (Message)</label>
+            <textarea id="message" name="message" rows="4" placeholder="소중한 의견을 남겨주세요." required></textarea>
+          </div>
+          <button type="submit" class="btn">메시지 보내기</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- COMMENTS -->
+    <div class="container">
+      <div class="card comment-card">
+        <div class="header">
+          <h2>💬 유저 댓글</h2>
+        </div>
+        <div id="disqus_thread"></div>
+        <script>
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://sunnyssam.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+      </div>
+    </div>
+    <script id="dsq-count-scr" src="//sunnyssam.disqus.com/count.js" async></script>
+
+  </div> <!-- End Main Layout -->
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-content">
+      <p>&copy; 2024 AI 가위바위보 챌린지. All rights reserved.</p>
+      <ul class="footer-links">
+        <li><a href="privacy.html">개인정보처리방침</a></li>
+        <li><a href="terms.html">이용약관</a></li>
+      </ul>
+      <p class="disclaimer">이 사이트는 Google Teachable Machine을 활용하여 제작되었습니다.</p>
+    </div>
+  </footer>
 
   <!-- Teachable Machine Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
@@ -155,14 +236,12 @@
         wcContainer.appendChild(webcam.canvas);
 
         isModelLoaded = true;
-        btnStartCam.style.display = "none"; // Hide start button
-        btnPlay.disabled = false; // Enable Play button
+        btnStartCam.style.display = "none"; 
+        btnPlay.disabled = false; 
         
-        console.log("Model Loaded. Classes:", model.getClassLabels());
-
       } catch (e) {
         console.error(e);
-        alert("카메라 접근 권한이 필요하거나 모델을 불러올 수 없습니다.");
+        alert("카메라 접근 권한이 필요하거나 모델을 불러올 수 없습니다. 브라우저 설정에서 카메라 권한을 확인해주세요.");
         btnStartCam.innerText = "📸 카메라 켜기";
         btnStartCam.disabled = false;
       }
@@ -170,9 +249,6 @@
 
     async function loop() {
       webcam.update(); 
-      // We don't predict every frame for performance, 
-      // and only predict when game triggers 'capture'.
-      // But to keep webcam smooth, we update it.
       window.requestAnimationFrame(loop);
     }
 
@@ -182,13 +258,11 @@
     async function playGame() {
       if (!isModelLoaded) return;
       
-      // 1. Reset UI
       btnPlay.disabled = true;
       elResult.innerText = "";
       elResult.className = "result-message";
-      elMatch.innerHTML = "";
+      elMatch.innerHTML = "AI가 생각중입니다...";
       
-      // 2. Countdown
       let count = 3;
       elCountdown.innerText = count;
       
@@ -197,26 +271,23 @@
         if (count > 0) {
           elCountdown.innerText = count;
         } else {
-          // 3. Capture & Predict
           clearInterval(timer);
           elCountdown.innerText = "Shoot!";
           
           await handlePrediction();
           
-          // Reset button after short delay
           setTimeout(() => {
              elCountdown.innerText = "";
              btnPlay.disabled = false;
-          }, 1500);
+             elMatch.innerHTML = "한 판 더?";
+          }, 2000);
         }
       }, 800);
     }
 
     async function handlePrediction() {
-      // Predict User's Move
       const prediction = await model.predict(webcam.canvas);
       
-      // Find class with highest probability
       let maxProb = 0;
       let userMove = "";
       
@@ -227,76 +298,57 @@
         }
       }
 
-      // Computer's Move (Random)
-      // We assume standard RSP if we can't map model labels perfectly,
-      // but let's try to map model labels to 0:Rock, 1:Paper, 2:Scissors logic if possible.
-      // Since we don't know EXACT labels of user model, we will use text matching.
-      
-      // Standardize user move to: 'rock', 'paper', 'scissors'
       const userStandard = standardizeMove(userMove);
-      
-      // Random Com Move
       const moves = ['rock', 'paper', 'scissors'];
       const comMove = moves[Math.floor(Math.random() * 3)];
       
-      // Display
-      const userDisplay = getDisplayEmoji(userStandard) + " " + userMove;
-      const comDisplay = getDisplayEmoji(comMove) + " Computer";
+      const userDisplay = getDisplayEmoji(userStandard);
+      const comDisplay = getDisplayEmoji(comMove);
       
-      elMatch.innerHTML = `<span>${userDisplay}</span> <span class="vs-badge">VS</span> <span>${comDisplay}</span>`;
+      elMatch.innerHTML = `
+        <div style="display:flex; justify-content:center; align-items:center; gap:15px;">
+          <div style="text-align:center;">
+            <div style="font-size:30px;">${userDisplay}</div>
+            <div style="font-size:12px; color:#666;">YOU</div>
+          </div>
+          <div class="vs-badge">VS</div>
+          <div style="text-align:center;">
+            <div style="font-size:30px;">${comDisplay}</div>
+            <div style="font-size:12px; color:#666;">AI</div>
+          </div>
+        </div>
+      `;
 
-      // Judge
       if (userStandard === "unknown") {
-        elResult.innerText = "❓ 인식 실패 (다시 해보세요)";
+        elResult.innerText = "❓ 인식 실패";
         return;
       }
 
       const result = getResult(userStandard, comMove);
       
       if (result === "win") {
-        elResult.innerText = "🎉 이겼습니다!";
+        elResult.innerText = "🎉 당신의 승리!";
         elResult.classList.add("win");
         wins++;
         elScorePlayer.innerText = wins;
       } else if (result === "lose") {
-        elResult.innerText = "😭 졌습니다...";
+        elResult.innerText = "😭 당신의 패배";
         elResult.classList.add("lose");
         loses++;
         elScoreCom.innerText = loses;
       } else {
-        elResult.innerText = "🤝 비겼습니다";
+        elResult.innerText = "🤝 무승부";
         elResult.classList.add("draw");
         draws++;
         elScoreDraw.innerText = draws;
       }
     }
 
-    // -------------------------
-    // HELPER FUNCTIONS
-    // -------------------------
     function standardizeMove(label) {
-      // Convert User's Teachable Machine Label to 'rock' | 'paper' | 'scissors'
-      // Need to be flexible with English/Korean
       const lower = label.toLowerCase();
-      
       if (lower.includes("가위") || lower.includes("scissors") || lower.includes("sciss")) return "scissors";
       if (lower.includes("바위") || lower.includes("rock") || lower.includes("stone")) return "rock";
       if (lower.includes("보") || lower.includes("paper") || lower.includes("bo")) return "paper";
-      
-      // Fallback: If labels are just "Class 1", "Class 2"... we might need user mapping.
-      // For now, let's assume default TM order if text fails: 0:Rock, 1:Paper, 2:Scissors? 
-      // Actually TM order depends on user. 
-      // Let's try to map based on common index if strings fail. 
-      // (Risk: If user trained Paper first, this will be wrong. But better than nothing)
-      // Uncomment below if text matching fails often.
-      /*
-      const labels = model.getClassLabels();
-      const index = labels.indexOf(label);
-      if (index === 0) return "rock";
-      if (index === 1) return "paper";
-      if (index === 2) return "scissors";
-      */
-      
       return "unknown";
     }
 
