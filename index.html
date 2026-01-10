@@ -3,490 +3,269 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>로또 번호 추천</title>
-
-  <style>
-    /* =========================
-       THEME TOKENS
-       ========================= */
-    :root {
-      --bg1: #eff6ff;
-      --bg2: #dbeafe;
-
-      --card-bg: rgba(255, 255, 255, 0.82);
-      --card-border: rgba(59, 130, 246, 0.18);
-
-      --title: #1d4ed8;
-      --text: #1e293b;
-      --muted: #64748b;
-
-      --btn-text: #ffffff;
-      --btn-grad-1: #3b82f6;
-      --btn-grad-2: #60a5fa;
-      --btn-shadow: rgba(37, 99, 235, 0.3);
-
-      --set-bg: #f0f9ff;
-      --label: #2563eb;
-
-      --ball-bg: #dbeafe;
-      --ball-text: #1e3a8a;
-
-      --bonus-bg: #fde68a;
-      --bonus-text: #92400e;
-      --bonus-border: #f59e0b;
-
-      --plus: #f59e0b;
-
-      --radius-card: 22px;
-      --radius-set: 18px;
-
-      /* Responsive spacing */
-      --pad: clamp(14px, 3.5vw, 24px);
-      --gap: clamp(10px, 2.8vw, 16px);
-    }
-
-    [data-theme="dark"] {
-      --bg1: #0f172a;
-      --bg2: #172554;
-
-      --card-bg: rgba(15, 23, 42, 0.75);
-      --card-border: rgba(96, 165, 250, 0.2);
-
-      --title: #93c5fd;
-      --text: #e2e8f0;
-      --muted: #94a3b8;
-
-      --btn-text: #ffffff;
-      --btn-grad-1: #2563eb;
-      --btn-grad-2: #3b82f6;
-      --btn-shadow: rgba(59, 130, 246, 0.3);
-
-      --set-bg: rgba(255, 255, 255, 0.05);
-      --label: #60a5fa;
-
-      --ball-bg: rgba(59, 130, 246, 0.25);
-      --ball-text: #e2e8f0;
-
-      --bonus-bg: rgba(253, 230, 138, 0.18);
-      --bonus-text: #fde68a;
-      --bonus-border: rgba(245, 158, 11, 0.55);
-
-      --plus: #fbbf24;
-    }
-
-    /* =========================
-       BASE
-       ========================= */
-    * { box-sizing: border-box; }
-
-    body {
-      font-family: "Pretendard", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      margin: 0;
-      padding: var(--pad);
-      background: linear-gradient(135deg, var(--bg1), var(--bg2));
-      color: var(--text);
-      min-height: 100vh;
-    }
-
-    .wrap {
-      max-width: 840px;
-      margin: 0 auto;
-    }
-
-    .card {
-      background: var(--card-bg);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--card-border);
-      border-radius: var(--radius-card);
-      padding: var(--pad);
-      box-shadow: 0 12px 28px rgba(0,0,0,0.10);
-    }
-
-    /* =========================
-       HEADER (responsive)
-       ========================= */
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    h1 {
-      margin: 0;
-      fon
-      t-size: clamp(20px, 4.8vw, 26px);
-      color: var(--title);
-      letter-spacing: -0.2px;
-      line-height: 1.15;
-    }
-
-    .sub {
-      margin: 10px 0 0;
-      color: var(--muted);
-      font-size: clamp(13px, 3.4vw, 15px);
-      line-height: 1.55;
-    }
-
-    .themeBtn {
-      border: 1px solid var(--card-border);
-      background: rgba(255, 255, 255, 0.35);
-      color: var(--text);
-      padding: 10px 12px;
-      border-radius: 999px;
-      cursor: pointer;
-      font-weight: 800;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: transform 0.15s ease, background 0.15s ease;
-      user-select: none;
-      white-space: nowrap;
-    }
-    [data-theme="dark"] .themeBtn { background: rgba(255, 255, 255, 0.06); }
-    .themeBtn:hover { transform: translateY(-1px); }
-
-    /* =========================
-       ACTIONS
-       ========================= */
-    .actions {
-      margin-top: 16px;
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .mainBtn {
-      width: min(420px, 100%);
-      cursor: pointer;
-      border: none;
-      border-radius: 999px;
-      padding: 14px 18px;
-      font-size: clamp(14px, 3.6vw, 16px);
-      font-weight: 900;
-      background: linear-gradient(135deg, var(--btn-grad-1), var(--btn-grad-2));
-      color: var(--btn-text);
-      box-shadow: 0 10px 18px var(--btn-shadow);
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-    .mainBtn:hover { transform: translateY(-2px); box-shadow: 0 14px 24px var(--btn-shadow); }
-
-    /* =========================
-       RESULTS (responsive)
-       ========================= */
-    .sets {
-      margin-top: 18px;
-      display: grid;
-      gap: var(--gap);
-    }
-
-    .set {
-      background: var(--set-bg);
-      border-radius: var(--radius-set);
-      padding: clamp(12px, 3vw, 16px);
-      display: grid;
-      grid-template-columns: 74px 1fr;
-      gap: 10px;
-      align-items: start;
-    }
-
-    .label {
-      font-weight: 900;
-      color: var(--label);
-      font-size: 14px;
-      line-height: 42px; /* align with ball height */
-      white-space: nowrap;
-    }
-
-    .nums {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-
-    .ball {
-      width: clamp(36px, 10vw, 44px);
-      height: clamp(36px, 10vw, 44px);
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      font-weight: 900;
-      font-size: clamp(13px, 3.6vw, 16px);
-      color: var(--ball-text);
-      background: var(--ball-bg);
-      box-shadow: inset 0 -3px 0 rgba(0,0,0,0.06);
-      flex: 0 0 auto;
-    }
-
-    .plus {
-      font-weight: 900;
-      color: var(--plus);
-      margin: 0 2px;
-      font-size: 16px;
-    }
-
-    .bonus {
-      background: var(--bonus-bg);
-      color: var(--bonus-text);
-      border: 2px dashed var(--bonus-border);
-      box-shadow: none;
-    }
-
-    .footer {
-      margin-top: 16px;
-      text-align: center;
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    /* =========================
-       CONTACT FORM
-       ========================= */
-    .contact-card {
-      margin-top: 24px;
-    }
-
-    .contact-form {
-      display: grid;
-      gap: 16px;
-      margin-top: 20px;
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .form-group label {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--label);
-    }
-
-    .form-group input, 
-    .form-group textarea {
-      width: 100%;
-      padding: 12px 16px;
-      border-radius: 12px;
-      border: 1px solid var(--card-border);
-      background: var(--set-bg);
-      color: var(--text);
-      font-family: inherit;
-      font-size: 14px;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-
-    .form-group input:focus, 
-    .form-group textarea:focus {
-      outline: none;
-      border-color: var(--btn-grad-1);
-      box-shadow: 0 0 0 3px var(--btn-shadow);
-    }
-
-    .form-group textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
-
-    /* =========================
-       MOBILE OPTIMIZATIONS
-       ========================= */
-    @media (max-width: 480px) {
-      .topbar {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .themeBtn {
-        width: 100%;
-        justify-content: center;
-      }
-
-      .set {
-        grid-template-columns: 1fr; /* label on top */
-        align-items: center;
-      }
-
-      .label {
-        line-height: 1.2;
-        margin-bottom: 6px;
-      }
-    }
-  </style>
+  <title>AI 가위바위보 게임</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
-  <div class="wrap">
+  <div class="container">
     <div class="card">
-      <div class="topbar">
-        <h1>🎲 로또 번호 추천</h1>
-        <button id="themeToggle" class="themeBtn" type="button" aria-label="테마 전환">
-          <span id="themeIcon">🌙</span>
-          <span id="themeText">다크모드</span>
-        </button>
+      <div class="header">
+        <h1>✌️✊✋ AI 가위바위보</h1>
+        <p>카메라를 켜고 가위, 바위, 보 중 하나를 보여주세요.<br>AI 모델이 당신의 손을 인식하여 승부를 겨룹니다!</p>
       </div>
 
-      <p class="sub">버튼을 누르면 <b>로또 번호 5세트</b>와 <b>보너스 번호</b>가 함께 나와요.</p>
-
-      <div class="actions">
-        <button id="btn" class="mainBtn" type="button">🎲 로또 번호 추천받기</button>
+      <div class="webcam-wrapper">
+        <div id="webcam-container">
+          <div class="placeholder-text" id="placeholder">카메라 로딩 대기중...</div>
+        </div>
       </div>
 
-      <div id="results" class="sets" aria-live="polite"></div>
-
-      <div class="footer">
-        ※ 1~45 중 중복 없는 6개 번호 + 보너스 1개 (세트별)<br />
-        재미로만 즐겨주세요 🙂
+      <div class="status-area">
+        <div id="countdown" class="countdown"></div>
+        <div id="result" class="result-message"></div>
+        <div id="match-detail" class="match-info"></div>
       </div>
-    </div>
 
-    <div class="card contact-card">
-      <h2>📩 비즈니스 문의</h2>
-      <p class="sub">광고 제휴 및 피드백은 아래 폼을 통해 남겨주세요.</p>
-      <form action="https://formspree.io/f/mjggbojl" method="POST" class="contact-form">
-        <div class="form-group">
-          <label for="name">성함</label>
-          <input type="text" id="name" name="name" placeholder="홍길동" required>
-        </div>
-        <div class="form-group">
-          <label for="email">이메일 주소</label>
-          <input type="email" id="email" name="_replyto" placeholder="example@domain.com" required>
-        </div>
-        <div class="form-group">
-          <label for="message">문의 내용</label>
-          <textarea id="message" name="message" rows="4" placeholder="문의 내용을 입력해주세요." required></textarea>
-        </div>
-        <button type="submit" class="mainBtn">보내기</button>
-      </form>
-    </div>
+      <div class="btn-group">
+        <button id="start-cam-btn" class="btn" onclick="init()">📸 카메라 켜기</button>
+        <button id="play-btn" class="btn" onclick="playGame()" disabled>🎮 가위바위보!</button>
+      </div>
 
-    <div class="card contact-card">
-      <h2>💬 댓글</h2>
-      <div id="disqus_thread"></div>
-      <script>
-          (function() { // DON'T EDIT BELOW THIS LINE
-          var d = document, s = d.createElement('script');
-          s.src = 'https://sunnyssam.disqus.com/embed.js';
-          s.setAttribute('data-timestamp', +new Date());
-          (d.head || d.body).appendChild(s);
-          })();
-      </script>
-      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+      <div class="score-board">
+        <div class="score-item">
+          <div class="score-label">Player</div>
+          <div id="score-player" class="score-val">0</div>
+        </div>
+        <div class="score-item">
+          <div class="score-label">Draw</div>
+          <div id="score-draw" class="score-val">0</div>
+        </div>
+        <div class="score-item">
+          <div class="score-label">Computer</div>
+          <div id="score-com" class="score-val">0</div>
+        </div>
+      </div>
+      
     </div>
   </div>
 
-  <script id="dsq-count-scr" src="//sunnyssam.disqus.com/count.js" async></script>
+  <!-- Teachable Machine Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
 
   <script>
     // -------------------------
-    // LOTTO LOGIC
+    // CONFIG & STATE
     // -------------------------
-    function pickMainNumbers() {
-      const set = new Set();
-      while (set.size < 6) {
-        set.add(Math.floor(Math.random() * 45) + 1);
-      }
-      return Array.from(set).sort((a, b) => a - b);
-    }
+    const URL = "https://teachablemachine.withgoogle.com/models/9vxjsUgVK/";
+    let model, webcam, labelContainer, maxPredictions;
+    let isModelLoaded = false;
+    
+    // Scores
+    let wins = 0;
+    let loses = 0;
+    let draws = 0;
 
-    function pickBonus(main) {
-      let bonus;
-      do {
-        bonus = Math.floor(Math.random() * 45) + 1;
-      } while (main.includes(bonus));
-      return bonus;
-    }
+    // DOM Elements
+    const btnStartCam = document.getElementById("start-cam-btn");
+    const btnPlay = document.getElementById("play-btn");
+    const elCountdown = document.getElementById("countdown");
+    const elResult = document.getElementById("result");
+    const elMatch = document.getElementById("match-detail");
+    const elScorePlayer = document.getElementById("score-player");
+    const elScoreCom = document.getElementById("score-com");
+    const elScoreDraw = document.getElementById("score-draw");
+    const elPlaceholder = document.getElementById("placeholder");
 
-    function recommendFiveSets() {
-      const container = document.getElementById("results");
-      container.innerHTML = "";
+    // -------------------------
+    // INIT WEBCAM & MODEL
+    // -------------------------
+    async function init() {
+      if (isModelLoaded) return;
+      
+      btnStartCam.innerText = "⏳ 로딩중...";
+      btnStartCam.disabled = true;
 
-      for (let i = 1; i <= 5; i++) {
-        const main = pickMainNumbers();
-        const bonus = pickBonus(main);
+      const modelURL = URL + "model.json";
+      const metadataURL = URL + "metadata.json";
 
-        const setDiv = document.createElement("div");
-        setDiv.className = "set";
+      try {
+        model = await tmImage.load(modelURL, metadataURL);
+        maxPredictions = model.getTotalClasses();
 
-        const label = document.createElement("div");
-        label.className = "label";
-        label.textContent = i + "세트";
+        // Setup Webcam
+        const flip = true; 
+        webcam = new tmImage.Webcam(300, 300, flip); 
+        await webcam.setup(); 
+        await webcam.play();
+        window.requestAnimationFrame(loop);
 
-        const numsDiv = document.createElement("div");
-        numsDiv.className = "nums";
+        // Append to DOM
+        const wcContainer = document.getElementById("webcam-container");
+        elPlaceholder.style.display = "none";
+        wcContainer.appendChild(webcam.canvas);
 
-
+        isModelLoaded = true;
+        btnStartCam.style.display = "none"; // Hide start button
+        btnPlay.disabled = false; // Enable Play button
         
-        main.forEach(n => {
-          const ball = document.createElement("div");
-          ball.className = "ball";
-          ball.textContent = n;
-          numsDiv.appendChild(ball);
-        });
+        console.log("Model Loaded. Classes:", model.getClassLabels());
 
-        const plus = document.createElement("div");
-        plus.className = "plus";
-        plus.textContent = "+";
-
-        const bonusBall = document.createElement("div");
-        bonusBall.className = "ball bonus";
-        bonusBall.textContent = bonus;
-
-        numsDiv.appendChild(plus);
-        numsDiv.appendChild(bonusBall);
-
-        setDiv.appendChild(label);
-        setDiv.appendChild(numsDiv);
-        container.appendChild(setDiv);
+      } catch (e) {
+        console.error(e);
+        alert("카메라 접근 권한이 필요하거나 모델을 불러올 수 없습니다.");
+        btnStartCam.innerText = "📸 카메라 켜기";
+        btnStartCam.disabled = false;
       }
     }
 
-    // -------------------------
-    // THEME TOGGLE (light/dark)
-    // -------------------------
-    const THEME_KEY = "lotto_theme";
-
-    function applyTheme(theme) {
-      // theme: "light" | "dark"
-      if (theme === "dark") {
-        document.documentElement.setAttribute("data-theme", "dark");
-        document.getElementById("themeIcon").textContent = "☀️";
-        document.getElementById("themeText").textContent = "화이트모드";
-      } else {
-        document.documentElement.removeAttribute("data-theme");
-        document.getElementById("themeIcon").textContent = "🌙";
-        document.getElementById("themeText").textContent = "다크모드";
-      }
-      localStorage.setItem(THEME_KEY, theme);
+    async function loop() {
+      webcam.update(); 
+      // We don't predict every frame for performance, 
+      // and only predict when game triggers 'capture'.
+      // But to keep webcam smooth, we update it.
+      window.requestAnimationFrame(loop);
     }
 
-    function initTheme() {
-      const saved = localStorage.getItem(THEME_KEY);
-      if (saved === "dark" || saved === "light") {
-        applyTheme(saved);
+    // -------------------------
+    // GAME LOGIC
+    // -------------------------
+    async function playGame() {
+      if (!isModelLoaded) return;
+      
+      // 1. Reset UI
+      btnPlay.disabled = true;
+      elResult.innerText = "";
+      elResult.className = "result-message";
+      elMatch.innerHTML = "";
+      
+      // 2. Countdown
+      let count = 3;
+      elCountdown.innerText = count;
+      
+      const timer = setInterval(async () => {
+        count--;
+        if (count > 0) {
+          elCountdown.innerText = count;
+        } else {
+          // 3. Capture & Predict
+          clearInterval(timer);
+          elCountdown.innerText = "Shoot!";
+          
+          await handlePrediction();
+          
+          // Reset button after short delay
+          setTimeout(() => {
+             elCountdown.innerText = "";
+             btnPlay.disabled = false;
+          }, 1500);
+        }
+      }, 800);
+    }
+
+    async function handlePrediction() {
+      // Predict User's Move
+      const prediction = await model.predict(webcam.canvas);
+      
+      // Find class with highest probability
+      let maxProb = 0;
+      let userMove = "";
+      
+      for (let i = 0; i < maxPredictions; i++) {
+        if (prediction[i].probability > maxProb) {
+          maxProb = prediction[i].probability;
+          userMove = prediction[i].className;
+        }
+      }
+
+      // Computer's Move (Random)
+      // We assume standard RSP if we can't map model labels perfectly,
+      // but let's try to map model labels to 0:Rock, 1:Paper, 2:Scissors logic if possible.
+      // Since we don't know EXACT labels of user model, we will use text matching.
+      
+      // Standardize user move to: 'rock', 'paper', 'scissors'
+      const userStandard = standardizeMove(userMove);
+      
+      // Random Com Move
+      const moves = ['rock', 'paper', 'scissors'];
+      const comMove = moves[Math.floor(Math.random() * 3)];
+      
+      // Display
+      const userDisplay = getDisplayEmoji(userStandard) + " " + userMove;
+      const comDisplay = getDisplayEmoji(comMove) + " Computer";
+      
+      elMatch.innerHTML = `<span>${userDisplay}</span> <span class="vs-badge">VS</span> <span>${comDisplay}</span>`;
+
+      // Judge
+      if (userStandard === "unknown") {
+        elResult.innerText = "❓ 인식 실패 (다시 해보세요)";
         return;
       }
-      const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-      applyTheme(prefersDark ? "dark" : "light");
+
+      const result = getResult(userStandard, comMove);
+      
+      if (result === "win") {
+        elResult.innerText = "🎉 이겼습니다!";
+        elResult.classList.add("win");
+        wins++;
+        elScorePlayer.innerText = wins;
+      } else if (result === "lose") {
+        elResult.innerText = "😭 졌습니다...";
+        elResult.classList.add("lose");
+        loses++;
+        elScoreCom.innerText = loses;
+      } else {
+        elResult.innerText = "🤝 비겼습니다";
+        elResult.classList.add("draw");
+        draws++;
+        elScoreDraw.innerText = draws;
+      }
     }
 
-    document.getElementById("themeToggle").addEventListener("click", () => {
-      const isDark = document.documentElement.getAttribute("data-theme") === "dark";
-      applyTheme(isDark ? "light" : "dark");
-    });
-
     // -------------------------
-    // INIT
+    // HELPER FUNCTIONS
     // -------------------------
-    document.getElementById("btn").addEventListener("click", recommendFiveSets);
+    function standardizeMove(label) {
+      // Convert User's Teachable Machine Label to 'rock' | 'paper' | 'scissors'
+      // Need to be flexible with English/Korean
+      const lower = label.toLowerCase();
+      
+      if (lower.includes("가위") || lower.includes("scissors") || lower.includes("sciss")) return "scissors";
+      if (lower.includes("바위") || lower.includes("rock") || lower.includes("stone")) return "rock";
+      if (lower.includes("보") || lower.includes("paper") || lower.includes("bo")) return "paper";
+      
+      // Fallback: If labels are just "Class 1", "Class 2"... we might need user mapping.
+      // For now, let's assume default TM order if text fails: 0:Rock, 1:Paper, 2:Scissors? 
+      // Actually TM order depends on user. 
+      // Let's try to map based on common index if strings fail. 
+      // (Risk: If user trained Paper first, this will be wrong. But better than nothing)
+      // Uncomment below if text matching fails often.
+      /*
+      const labels = model.getClassLabels();
+      const index = labels.indexOf(label);
+      if (index === 0) return "rock";
+      if (index === 1) return "paper";
+      if (index === 2) return "scissors";
+      */
+      
+      return "unknown";
+    }
 
-    initTheme();
-    recommendFiveSets();
+    function getDisplayEmoji(move) {
+      if (move === "rock") return "✊";
+      if (move === "paper") return "✋";
+      if (move === "scissors") return "✌️";
+      return "❓";
+    }
+
+    function getResult(u, c) {
+      if (u === c) return "draw";
+      if (u === "rock") return (c === "scissors") ? "win" : "lose";
+      if (u === "paper") return (c === "rock") ? "win" : "lose";
+      if (u === "scissors") return (c === "paper") ? "win" : "lose";
+      return "draw";
+    }
+
   </script>
 </body>
 </html>
