@@ -115,7 +115,8 @@
 
     h1 {
       margin: 0;
-      font-size: clamp(20px, 4.8vw, 26px);
+      fon
+      t-size: clamp(20px, 4.8vw, 26px);
       color: var(--title);
       letter-spacing: -0.2px;
       line-height: 1.15;
@@ -243,6 +244,56 @@
     }
 
     /* =========================
+       CONTACT FORM
+       ========================= */
+    .contact-card {
+      margin-top: 24px;
+    }
+
+    .contact-form {
+      display: grid;
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group label {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--label);
+    }
+
+    .form-group input, 
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+      background: var(--set-bg);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 14px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-group input:focus, 
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--btn-grad-1);
+      box-shadow: 0 0 0 3px var(--btn-shadow);
+    }
+
+    .form-group textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    /* =========================
        MOBILE OPTIMIZATIONS
        ========================= */
     @media (max-width: 480px) {
@@ -293,6 +344,26 @@
         재미로만 즐겨주세요 🙂
       </div>
     </div>
+
+    <div class="card contact-card">
+      <h2>📩 비즈니스 문의</h2>
+      <p class="sub">광고 제휴 및 피드백은 아래 폼을 통해 남겨주세요.</p>
+      <form action="https://formspree.io/f/mjggbojl" method="POST" class="contact-form">
+        <div class="form-group">
+          <label for="name">성함</label>
+          <input type="text" id="name" name="name" placeholder="홍길동" required>
+        </div>
+        <div class="form-group">
+          <label for="email">이메일 주소</label>
+          <input type="email" id="email" name="_replyto" placeholder="example@domain.com" required>
+        </div>
+        <div class="form-group">
+          <label for="message">문의 내용</label>
+          <textarea id="message" name="message" rows="4" placeholder="문의 내용을 입력해주세요." required></textarea>
+        </div>
+        <button type="submit" class="mainBtn">보내기</button>
+      </form>
+    </div>
   </div>
 
   <script>
@@ -333,6 +404,7 @@
         const numsDiv = document.createElement("div");
         numsDiv.className = "nums";
 
+        
         main.forEach(n => {
           const ball = document.createElement("div");
           ball.className = "ball";
