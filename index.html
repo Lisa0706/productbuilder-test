@@ -47,7 +47,56 @@
       </div>
       
     </div>
+
+    <div class="card contact-card">
+      <div class="header">
+        <h2>📩 비즈니스 문의</h2>
+        <p>광고 제휴 및 피드백은 아래 폼을 통해 남겨주세요.</p>
+      </div>
+      <form action="https://formspree.io/f/mjggbojl" method="POST" class="contact-form">
+        <div class="form-group">
+          <label for="name">성함</label>
+          <input type="text" id="name" name="name" placeholder="홍길동" required>
+        </div>
+        <div class="form-group">
+          <label for="email">이메일 주소</label>
+          <input type="email" id="email" name="_replyto" placeholder="example@domain.com" required>
+        </div>
+        <div class="form-group">
+          <label for="message">문의 내용</label>
+          <textarea id="message" name="message" rows="4" placeholder="문의 내용을 입력해주세요." required></textarea>
+        </div>
+        <button type="submit" class="btn">보내기</button>
+      </form>
+    </div>
+
+    <div class="card contact-card">
+      <div class="header">
+        <h2>💬 댓글</h2>
+      </div>
+      <div id="disqus_thread"></div>
+      <script>
+          /**
+          *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+          *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+          /*
+          var disqus_config = function () {
+          this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+          this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+          };
+          */
+          (function() { // DON'T EDIT BELOW THIS LINE
+          var d = document, s = d.createElement('script');
+          s.src = 'https://sunnyssam.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+          })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
   </div>
+
+  <script id="dsq-count-scr" src="//sunnyssam.disqus.com/count.js" async></script>
 
   <!-- Teachable Machine Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
