@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://aissam.org/sitemap.xml
+Sitemap: https://aissam.pages.dev/sitemap.xml
