@@ -1,0 +1,13 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+<style>
+    .apple-body { fill: #EA4335; }
+    .apple-leaf { fill: #34A853; }
+    .power-symbol { stroke: #FFFFFF; stroke-width: 16; stroke-linecap: round; }
+</style>
+<path class="apple-body" d="M184,96c0-26.51-21.49-48-48-48s-48,21.49-48,48c0,22.33,15.21,41.13,36,46.5V192c0,4.42,3.58,8,8,8h8c4.42,0,8-3.58,8-8v-49.5c20.79-5.37,36-24.17,36-46.5Z"/>
+<path class="apple-leaf" d="M168,48c0-13.255-10.745-24-24-24s-24,10.745-24,24c0,8.47,4.4,15.91,11.2,20.25-3.3,2.2-5.6,5.8-5.6,9.75,0,6.63,5.37,12,12,12s12-5.37,12-12c0-3.95-2.3-7.55-5.6-9.75,6.8-4.34,11.2-11.78,11.2-20.25Z"/>
+<g class="power-symbol">
+    <path d="M128,112 V160"/>
+    <path d="M104,120 a24,24 0 1,1 48,0"/>
+</g>
+</svg>
