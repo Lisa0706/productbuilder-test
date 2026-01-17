@@ -215,6 +215,27 @@
 
   </div> <!-- End Main Layout -->
 
+  <!-- SHARE SECTION -->
+  <div class="container">
+    <div class="card share-card">
+      <h2 data-lang="share_title">이 페이지 공유하기</h2>
+      <div class="share-buttons-container">
+        <a id="share-twitter" class="share-btn twitter" href="#" target="_blank" title="트위터에 공유">
+          <span data-lang="share_twitter">트위터</span>
+        </a>
+        <a id="share-facebook" class="share-btn facebook" href="#" target="_blank" title="페이스북에 공유">
+          <span data-lang="share_facebook">페이스북</span>
+        </a>
+        <a id="share-kakao" class="share-btn kakao" href="#" title="카카오톡으로 공유">
+          <span data-lang="share_kakao">카카오톡</span>
+        </a>
+        <button id="copy-link" class="share-btn copy" title="링크 복사">
+          <span data-lang="share_copy">링크 복사</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- FOOTER -->
   <footer class="footer">
     <div class="footer-content">
@@ -230,7 +251,9 @@
   <!-- Teachable Machine Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+  <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js" integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4" crossorigin="anonymous"></script>
   <script src="language.js"></script>
+  <script src="main.js"></script>
 
   <script>
     // -------------------------

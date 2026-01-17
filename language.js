@@ -44,7 +44,12 @@ const translations = {
     "faq_a3": "The AI does not use any special strategy, it simply chooses one of rock, paper, or scissors at random. Therefore, beating the AI is purely a matter of luck. Keep trying!",
     "logo_text": "🤖 aissam",
     "title_text": "aissam - Rock Paper Scissors Game with an AI Teacher",
-    "faq_nav": "FAQ"
+    "faq_nav": "FAQ",
+    "share_title": "Share this page",
+    "share_twitter": "Twitter",
+    "share_facebook": "Facebook",
+    "share_kakao": "KakaoTalk",
+    "share_copy": "Copy Link"
   },
   "ko": {
     "nav_game": "게임하기",
@@ -91,7 +96,12 @@ const translations = {
     "faq_a3": "AI는 특별한 전략을 사용하지 않고, 가위, 바위, 보 중에서 무작위로 하나를 선택합니다. 따라서 AI를 이기는 것은 순전히 운에 달려 있습니다. 계속 도전해보세요!",
     "logo_text": "🤖 aissam",
     "title_text": "aissam - AI 선생님과 함께하는 가위바위보 게임",
-    "faq_nav": "자주 묻는 질문"
+    "faq_nav": "자주 묻는 질문",
+    "share_title": "이 페이지 공유하기",
+    "share_twitter": "트위터",
+    "share_facebook": "페이스북",
+    "share_kakao": "카카오톡",
+    "share_copy": "링크 복사"
   }
 };
 
