@@ -415,3 +415,29 @@ a { text-decoration: none; color: inherit; }
   0% { transform: scale(0.5); opacity: 0; }
   100% { transform: scale(1); opacity: 1; }
 }
+
+/* =========================
+   LANGUAGE SELECTOR
+   ========================= */
+.language-selector {
+  display: flex;
+  gap: 5px;
+}
+
+.language-selector button {
+  background: none;
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+
+.language-selector button:hover,
+.language-selector button.active {
+  background: var(--primary);
+  color: white;
+}

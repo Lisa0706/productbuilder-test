@@ -32,17 +32,22 @@
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3472571787700844" crossorigin="anonymous"></script>
 </head>
-<body>
+<body data-lang="ko">
 
   <!-- NAVIGATION -->
   <nav class="navbar">
     <div class="nav-container">
-      <a href="/" class="logo">🤖 aissam</a>
+      <a href="/" class="logo" data-lang="logo_text">🤖 aissam</a>
       <ul class="nav-links">
-        <li><a href="#game">게임하기</a></li>
-        <li><a href="#about">기술 원리</a></li>
-        <li><a href="#contact">문의하기</a></li>
+        <li><a href="#game" data-lang="nav_game">게임하기</a></li>
+        <li><a href="#about" data-lang="nav_about">기술 원리</a></li>
+        <li><a href="#contact" data-lang="nav_contact">문의하기</a></li>
+        <li><a href="#faq" data-lang="faq_nav">자주 묻는 질문</a></li>
       </ul>
+      <div class="language-selector">
+        <button data-language="ko">KO</button>
+        <button data-language="en">EN</button>
+      </div>
     </div>
   </nav>
 
@@ -59,13 +64,13 @@
     <div id="game" class="container">
       <div class="card game-card">
         <div class="header">
-          <h1>🤖 AI 선생님과 가위바위보</h1>
-          <p>여러분의 손동작을 실시간으로 인식하는 인공지능과 대결해보세요.<br><strong>카메라 켜기</strong>를 누르고 가위, 바위, 보를 보여주세요!</p>
+          <h1 data-lang="header_title">🤖 AI 선생님과 가위바위보</h1>
+          <p data-lang="header_subtitle">여러분의 손동작을 실시간으로 인식하는 인공지능과 대결해보세요.<br><strong>카메라 켜기</strong>를 누르고 가위, 바위, 보를 보여주세요!</p>
         </div>
 
         <div class="webcam-wrapper">
           <div id="webcam-container">
-            <div class="placeholder-text" id="placeholder">
+            <div class="placeholder-text" id="placeholder" data-lang="webcam_placeholder">
               <span class="icon">📷</span><br>
               카메라 권한을 허용해주세요.<br>
               모든 데이터는 서버로 전송되지 않고<br>브라우저에서만 처리됩니다.
@@ -75,26 +80,26 @@
 
         <div class="status-area">
           <div id="countdown" class="countdown"></div>
-          <div id="result" class="result-message">Ready?</div>
-          <div id="match-detail" class="match-info">AI를 이겨보세요!</div>
+          <div id="result" class="result-message" data-lang="result_ready">Ready?</div>
+          <div id="match-detail" class="match-info" data-lang="match_info_start">AI를 이겨보세요!</div>
         </div>
 
         <div class="btn-group">
-          <button id="start-cam-btn" class="btn" onclick="init()">📸 카메라 켜기</button>
-          <button id="play-btn" class="btn" onclick="playGame()" disabled>🎮 가위바위보!</button>
+          <button id="start-cam-btn" class="btn" onclick="init()" data-lang="start_cam_btn">📸 카메라 켜기</button>
+          <button id="play-btn" class="btn" onclick="playGame()" disabled data-lang="play_btn">🎮 가위바위보!</button>
         </div>
 
         <div class="score-board">
           <div class="score-item">
-            <div class="score-label">승리</div>
+            <div class="score-label" data-lang="score_player">승리</div>
             <div id="score-player" class="score-val text-win">0</div>
           </div>
           <div class="score-item">
-            <div class="score-label">무승부</div>
+            <div class="score-label" data-lang="score_draw">무승부</div>
             <div id="score-draw" class="score-val text-draw">0</div>
           </div>
           <div class="score-item">
-            <div class="score-label">패배</div>
+            <div class="score-label" data-lang="score_com">패배</div>
             <div id="score-com" class="score-val text-lose">0</div>
           </div>
         </div>
@@ -111,30 +116,30 @@
       </div>
 
       <div class="card info-card">
-        <h2>💡 이 게임은 어떻게 작동하나요?</h2>
+        <h2 data-lang="about_title">💡 이 게임은 어떻게 작동하나요?</h2>
         <article>
-          <h3>1. Teachable Machine 기술</h3>
-          <p>
+          <h3 data-lang="about_tech_title">1. Teachable Machine 기술</h3>
+          <p data-lang="about_tech_p">
             이 서비스는 구글의 <strong>Teachable Machine</strong> 기술을 활용하여 제작되었습니다. 
             수천 장의 가위, 바위, 보 손 모양 이미지를 미리 학습시킨 인공지능 모델이 탑재되어 있습니다. 
             사용자가 웹캠을 통해 손을 보여주면, 브라우저 내에서 실시간으로 이미지를 분석하여 
             가장 확률이 높은 손동작을 예측합니다.
           </p>
           
-          <h3>2. 프라이버시 보호 (Privacy First)</h3>
-          <p>
+          <h3 data-lang="about_privacy_title">2. 프라이버시 보호 (Privacy First)</h3>
+          <p data-lang="about_privacy_p">
             많은 분들이 웹캠 사용에 대해 걱정하실 수 있습니다. 하지만 안심하세요! 
             이 게임에 사용되는 <strong>TensorFlow.js</strong> 라이브러리는 모든 연산을 여러분의 기기(브라우저) 내에서 처리합니다. 
             즉, 여러분의 얼굴이나 방의 모습이 담긴 영상 데이터는 <strong>절대 서버로 전송되거나 저장되지 않습니다.</strong>
           </p>
 
-          <h3>3. 게임 규칙</h3>
+          <h3 data-lang="about_rules_title">3. 게임 규칙</h3>
           <ul>
-            <li>'카메라 켜기' 버튼을 눌러 웹캠 권한을 허용합니다.</li>
-            <li>카메라 화면 안에 손이 잘 보이도록 위치시킵니다.</li>
-            <li>'가위바위보!' 버튼을 누르면 3초 카운트다운이 시작됩니다.</li>
-            <li>타이밍에 맞춰 원하는 손동작을 취하세요.</li>
-            <li>AI는 무작위로 동작을 선택하며, 여러분의 동작 인식 결과와 비교하여 승패를 가립니다.</li>
+            <li data-lang="about_rules_li1">'카메라 켜기' 버튼을 눌러 웹캠 권한을 허용합니다.</li>
+            <li data-lang="about_rules_li2">카메라 화면 안에 손이 잘 보이도록 위치시킵니다.</li>
+            <li data-lang="about_rules_li3">'가위바위보!' 버튼을 누르면 3초 카운트다운이 시작됩니다.</li>
+            <li data-lang="about_rules_li4">타이밍에 맞춰 원하는 손동작을 취하세요.</li>
+            <li data-lang="about_rules_li5">AI는 무작위로 동작을 선택하며, 여러분의 동작 인식 결과와 비교하여 승패를 가립니다.</li>
           </ul>
         </article>
       </div>
@@ -144,23 +149,23 @@
     <div id="contact" class="container">
       <div class="card contact-card">
         <div class="header">
-          <h2>📩 비즈니스 및 제휴 문의</h2>
-          <p>서비스 개선 제안이나 광고 제휴 문의는 언제든 환영합니다.</p>
+          <h2 data-lang="contact_title">📩 비즈니스 및 제휴 문의</h2>
+          <p data-lang="contact_p">서비스 개선 제안이나 광고 제휴 문의는 언제든 환영합니다.</p>
         </div>
         <form action="https://formspree.io/f/mjggbojl" method="POST" class="contact-form">
           <div class="form-group">
-            <label for="name">성함 (Name)</label>
+            <label for="name" data-lang="contact_name">성함 (Name)</label>
             <input type="text" id="name" name="name" placeholder="홍길동" required>
           </div>
           <div class="form-group">
-            <label for="email">이메일 (Email)</label>
+            <label for="email" data-lang="contact_email">이메일 (Email)</label>
             <input type="email" id="email" name="_replyto" placeholder="example@domain.com" required>
           </div>
           <div class="form-group">
-            <label for="message">문의 내용 (Message)</label>
+            <label for="message" data-lang="contact_message">문의 내용 (Message)</label>
             <textarea id="message" name="message" rows="4" placeholder="소중한 의견을 남겨주세요." required></textarea>
           </div>
-          <button type="submit" class="btn">메시지 보내기</button>
+          <button type="submit" class="btn" data-lang="contact_send_btn">메시지 보내기</button>
         </form>
       </div>
     </div>
@@ -168,20 +173,20 @@
     <!-- FAQ SECTION -->
     <div id="faq" class="container content-section">
       <div class="card info-card">
-        <h2>🙋‍♀️ 자주 묻는 질문 (FAQ)</h2>
+        <h2 data-lang="faq_title">🙋‍♀️ 자주 묻는 질문 (FAQ)</h2>
         <article>
-          <h3>이 게임은 어떻게 만들어졌나요?</h3>
-          <p>
+          <h3 data-lang="faq_q1">이 게임은 어떻게 만들어졌나요?</h3>
+          <p data-lang="faq_a1">
             이 게임은 Google의 Teachable Machine을 사용하여 사용자의 손 모양을 인식하는 AI 모델을 학습시키고, TensorFlow.js를 사용하여 웹 브라우저에서 모델을 실행합니다. AI와 사용자의 선택을 비교하여 승패를 결정하는 간단한 게임 로직으로 구성되어 있습니다.
           </p>
           
-          <h3>제 얼굴이나 개인정보가 저장되나요?</h3>
-          <p>
+          <h3 data-lang="faq_q2">제 얼굴이나 개인정보가 저장되나요?</h3>
+          <p data-lang="faq_a2">
             아니요, 저장되지 않습니다. 모든 이미지 처리 및 AI 추론은 사용자의 웹 브라우저 내에서 직접 실행됩니다. 어떠한 개인 데이터도 서버로 전송되거나 저장되지 않으므로 안심하고 이용하셔도 좋습니다.
           </p>
 
-          <h3>AI는 어떻게 저를 이기나요?</h3>
-          <p>
+          <h3 data-lang="faq_q3">AI는 어떻게 저를 이기나요?</h3>
+          <p data-lang="faq_a3">
             AI는 특별한 전략을 사용하지 않고, 가위, 바위, 보 중에서 무작위로 하나를 선택합니다. 따라서 AI를 이기는 것은 순전히 운에 달려 있습니다. 계속 도전해보세요!
           </p>
         </article>
@@ -192,7 +197,7 @@
     <div class="container">
       <div class="card comment-card">
         <div class="header">
-          <h2>💬 유저 댓글</h2>
+          <h2 data-lang="comments_title">💬 유저 댓글</h2>
         </div>
         <div id="disqus_thread"></div>
         <script>
@@ -213,18 +218,19 @@
   <!-- FOOTER -->
   <footer class="footer">
     <div class="footer-content">
-      <p>&copy; 2026 aissam. All rights reserved.</p>
+      <p data-lang="footer_copyright">&copy; 2026 aissam. All rights reserved.</p>
       <ul class="footer-links">
-        <li><a href="privacy.html">개인정보처리방침</a></li>
-        <li><a href="terms.html">이용약관</a></li>
+        <li><a href="privacy.html" data-lang="footer_privacy">개인정보처리방침</a></li>
+        <li><a href="terms.html" data-lang="footer_terms">이용약관</a></li>
       </ul>
-      <p class="disclaimer">이 사이트는 Google Teachable Machine을 활용하여 제작되었습니다.</p>
+      <p class="disclaimer" data-lang="footer_disclaimer">이 사이트는 Google Teachable Machine을 활용하여 제작되었습니다.</p>
     </div>
   </footer>
 
   <!-- Teachable Machine Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+  <script src="language.js"></script>
 
   <script>
     // -------------------------
